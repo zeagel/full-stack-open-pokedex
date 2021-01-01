@@ -1,3 +1,5 @@
+// pokedex.test.js
+
 describe('Pokedex', function() {
   beforeEach(function() {
     cy.visit('http://localhost:5000')
