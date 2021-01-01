@@ -12,4 +12,16 @@ describe('Pokedex', function() {
     cy.contains('ivysaur').click()
     cy.contains('chlorophyll')
   })
+
+  it('next pokemon page is opened when "Next" is clicked', function() {
+    cy.contains('ivysaur').click()
+    cy.contains('Next').click()
+    cy.contains('venusaur')
+  })
+
+  it('previous pokemon page is opened when "Previous" is clicked', function() {
+    cy.contains('ivysaur').click()
+    cy.contains('Previous').click()
+    cy.contains('bulbasaur')
+  })
 })
