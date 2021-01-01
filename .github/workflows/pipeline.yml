@@ -39,8 +39,9 @@ jobs:
           heroku_email: "mika.honkanen@gmail.com"
           healthcheck: "https://full-stackopen-cicd.herokuapp.com/health"
           checkstring: "ok"
-          rollbackonhealthcheckfailed: true   
+          rollbackonhealthcheckfailed: true
   tag_deployed_release:
+    needs: simple_deployment_pipeline # the pipeline jobs must be successfully completed before creating a new release tag. 
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
