@@ -1,1 +1,1 @@
-web: npm run käynnistä-tuotanto
+web: npm run start-prod
