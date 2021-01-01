@@ -32,7 +32,8 @@ jobs:
           wait-on: http://localhost:5000
       - name: deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.8.8
-        if: ${{ github.event_name == 'push' }} # executed only when the change is merged or pushed to master
+        if: ${{ github.event_name == 'push' }} # executed only when the change is merged or pushed to master.
+        if: "!contains(toJSON(github.event.commits.*.message), '#skip')" # deployment is skipped if keyword '#skip' is found from commit messages.
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "full-stackopen-cicd"
@@ -43,11 +44,12 @@ jobs:
   tag_deployed_release:
     needs: simple_deployment_pipeline # the pipeline jobs must be successfully completed before creating a new release tag. 
     runs-on: ubuntu-18.04
+    if: ${{ github.event_name == 'push' }} # executed only when the change is merged or pushed to master.
+    if: "!contains(toJSON(github.event.commits.*.message), '#skip')" # Tagging is skipped if keyword '#skip' is found from commit messages.
     steps:
     - uses: actions/checkout@v2
     - name: bump version and push tag
       uses: anothrNick/github-tag-action@1.33.0
-      if: ${{ github.event_name == 'push' }} # executed only when the change is merged or pushed to master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
