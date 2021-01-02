@@ -74,8 +74,8 @@ jobs:
           fields: repo,message,commit,author,took
           channel: '#code'
           icon_emoji: ':no_entry:'
-          color: 'danger'
           author_name: 'Build Bot'
+          custom_payload: { attachments: [{ color: 'danger' }] }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
