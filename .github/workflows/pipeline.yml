@@ -52,10 +52,10 @@ jobs:
           status: custom
           fields: commit,author,took
           channel: '#code'
+          icon_emoji: ':white_check_mark:'
           custom_payload: |
             {
               text: '*Build Bot*',
-              icon_emoji: ':white_check_mark:',
               attachments: [{
                 color: 'good',
                 text: `a new version deployed to https://full-stackopen-cicd.herokuapp.com (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR}, build took ${process.env.AS_TOOK}`,
