@@ -1,1 +1,1 @@
-web: npm run starttaa-prodi
+web: npm run start-prod
