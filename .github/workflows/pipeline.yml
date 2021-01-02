@@ -45,9 +45,17 @@ jobs:
       - name: notification
         uses: 8398a7/action-slack@b6a4c791ce0c137843eb11e038f855cf567014dc
         with:
-          status: ${{ job.status }}
+          status: custom
           fields: repo,message,commit,author,took
           channel: '#code'
+          custom_payload: |
+            {
+              username: 'Zeagel's Build Bot',
+              icon_emoji: '${{ job.status }}' === 'success' ? ':white_check_mark:' : ':no_entry:',
+              attachments:[{
+                text: '${{ job.status }}' !== 'success' ? `a new version deployed to https://full-stackopen-cicd.herokuapp.com (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR}, build took ${process.env.AS_TOOK}` : null,
+              }]
+            }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
