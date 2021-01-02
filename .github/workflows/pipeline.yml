@@ -42,49 +42,37 @@ jobs:
           healthcheck: "https://full-stackopen-cicd.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
-      - name: notification
+      - name: build ok notification
+        if: ${{ success() }}
         uses: 8398a7/action-slack@b6a4c791ce0c137843eb11e038f855cf567014dc
         with:
           status: custom
-          fields: repo,message,commit,author,took
+          fields: commit,author,took
           channel: '#code'
           custom_payload: |
-            {  
-              icon_emoji: "${{ job.status }}" === "success" ? ":white_check_mark:" : ":no_entry:",
-              text: "*Zeagel's Build Bot*",
-              attachments: "${{ job.status }}" === "success" 
-                ? [{
-                    color: "good",
-                    text: `a new version deployed to https://full-stackopen-cicd.herokuapp.com (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR}, build took ${process.env.AS_TOOK}`,
-                  }]
-                : [{
-                    color: "danger",
-                    fields: [{
-                      title: "repo",
-                      value: ${process.env.AS_REPO}
-                    },
-                    {
-                      title: "message",
-                      value: ${process.env.AS_MESSAGE}                    
-                    },
-                    {
-                      title: "commit",
-                      value: ${process.env.AS_COMMIT}
-                    },
-                    {
-                      title: "author",
-                      value: ${process.env.AS_AUTHOR}
-                    },
-                    {
-                      title: "took",
-                      value: ${process.env.AS_TOOK}
-                    }]  
-                  }]
+            {
+              username: 'Build Bot',
+              icon_emoji: ':white_check_mark:',
+              attachments: [{
+                color: 'good',
+                text: `a new version deployed to https://full-stackopen-cicd.herokuapp.com (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR}, build took ${process.env.AS_TOOK}`,
+              }]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: build failure notification
+        if: ${{ !success() }}
+        uses: 8398a7/action-slack@b6a4c791ce0c137843eb11e038f855cf567014dc
+        with:
+          status: '${{ job.status }}'
+          fields: repo,message,commit,author,took
+          channel: '#code'
+          icon_emoji: ':no_entry:'
+          color: 'danger'
+          author_name: 'Build Bot'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        if: always()
   tag_deployed_release:
     needs: simple_deployment_pipeline # the pipeline jobs must be successfully completed before creating a new release tag. 
     runs-on: ubuntu-18.04
