@@ -42,6 +42,16 @@ jobs:
           healthcheck: "https://full-stackopen-cicd.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+      - name: notification
+        uses: 8398a7/action-slack@b6a4c791ce0c137843eb11e038f855cf567014dc
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,took
+          channel: '#code'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        if: always()
   tag_deployed_release:
     needs: simple_deployment_pipeline # the pipeline jobs must be successfully completed before creating a new release tag. 
     runs-on: ubuntu-18.04
