@@ -51,7 +51,7 @@ jobs:
           channel: '#code'
           custom_payload: |
             {
-              username: 'Build Bot',
+              text: '*Build Bot*',
               icon_emoji: ':white_check_mark:',
               attachments: [{
                 color: 'good',
