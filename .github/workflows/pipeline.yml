@@ -61,23 +61,23 @@ jobs:
                     color: "danger",
                     fields: [{
                       title: "repo",
-                      value: "${{ process.env.AS_REPO }}"
+                      value: ${process.env.AS_REPO}
                     },
                     {
                       title: "message",
-                      value: "${{ process.env.AS_MESSAGE }}"                    
+                      value: ${process.env.AS_MESSAGE}                    
                     },
                     {
                       title: "commit",
-                      value: "${{ process.env.AS_COMMIT }}"
+                      value: ${process.env.AS_COMMIT}
                     },
                     {
                       title: "author",
-                      value: "${{ process.env.AS_AUTHOR }}"
+                      value: ${process.env.AS_AUTHOR}
                     },
                     {
                       title: "took",
-                      value: "${{ process.env.AS_TOOK }}"
+                      value: ${process.env.AS_TOOK}
                     }]  
                   }]
         env:
