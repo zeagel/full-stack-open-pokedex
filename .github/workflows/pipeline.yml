@@ -31,7 +31,7 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:5000
       - name: deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.8.8
+        uses: akhileshns/heroku-deploy@bf72a2f486f950d3c6b1be566f8717f998bbce51
         if: | # executed only when the change is merged or pushed to master AND commit messages do not contain keyword '#skip'.
           github.event_name == 'push' && 
           !contains(toJSON(github.event.commits.*.message), '#skip')
@@ -51,7 +51,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: bump version and push tag
-      uses: anothrNick/github-tag-action@1.33.0
+      uses: anothrNick/github-tag-action@eca2b69f9e2c24be7decccd0f15fdb1ea5906598
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
