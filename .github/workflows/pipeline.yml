@@ -75,7 +75,14 @@ jobs:
           channel: '#code'
           icon_emoji: ':no_entry:'
           author_name: 'Build Bot'
-          custom_payload: { attachments: [{ color: 'danger' }] }
+          custom_payload: |
+            { 
+              attachments: [
+                { 
+                  color: 'danger'
+                }
+              ] 
+            }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
