@@ -48,9 +48,9 @@ jobs:
           status: custom
           fields: repo,message,commit,author,took
           channel: '#code'
+          username: 'Zeagel''s Build Bot'
           custom_payload: |
-            {
-              username: 'Zeagel's Build Bot',
+            {  
               icon_emoji: '${{ job.status }}' === 'success' ? ':white_check_mark:' : ':no_entry:',
               attachments:[{
                 text: '${{ job.status }}' !== 'success' ? `a new version deployed to https://full-stackopen-cicd.herokuapp.com (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR}, build took ${process.env.AS_TOOK}` : null,
