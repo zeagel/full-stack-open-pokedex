@@ -43,7 +43,10 @@ jobs:
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
       - name: build ok notification
-        if: ${{ success() }}
+        if: | # executed only when the change is merged or pushed to master AND commit messages do not contain keyword '#skip' AND no errors in earlier steps.
+          github.event_name == 'push' && 
+          !contains(toJSON(github.event.commits.*.message), '#skip') &&
+          ${{ success() }}          
         uses: 8398a7/action-slack@b6a4c791ce0c137843eb11e038f855cf567014dc
         with:
           status: custom
@@ -61,7 +64,10 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: build failure notification
-        if: ${{ !success() }}
+        if: | # executed only when the change is merged or pushed to master AND commit messages do not contain keyword '#skip' AND there are errors in earlier steps.
+          github.event_name == 'push' && 
+          !contains(toJSON(github.event.commits.*.message), '#skip') &&
+          ${{ !success() }}
         uses: 8398a7/action-slack@b6a4c791ce0c137843eb11e038f855cf567014dc
         with:
           status: '${{ job.status }}'
