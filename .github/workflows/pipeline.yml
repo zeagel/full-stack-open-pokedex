@@ -48,14 +48,38 @@ jobs:
           status: custom
           fields: repo,message,commit,author,took
           channel: '#code'
-          username: 'Zeagel''s Build Bot'
           custom_payload: |
             {  
-              icon_emoji: '${{ job.status }}' === 'success' ? ':white_check_mark:' : ':no_entry:',
-              attachments:[{
-                text: '${{ job.status }}' !== 'success' ? `a new version deployed to https://full-stackopen-cicd.herokuapp.com (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR}, build took ${process.env.AS_TOOK}` : null,
-              }]
-            }
+              icon_emoji: "${{ job.status }}" === "success" ? ":white_check_mark:" : ":no_entry:",
+              text: "*Zeagel's Build Bot*"
+              attachments: "${{ job.status }}" === "success" 
+                ? [{
+                    color: "good",
+                    text: `a new version deployed to https://full-stackopen-cicd.herokuapp.com (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR}, build took ${process.env.AS_TOOK}`,
+                  }]
+                : [{
+                    color: "danger",
+                    fields: [{
+                      title: "repo",
+                      value: "${{ process.env.AS_REPO }}"
+                    },
+                    {
+                      title: "message",
+                      value: "${{ process.env.AS_MESSAGE }}"                    
+                    },
+                    {
+                      title: "commit",
+                      value: "${{ process.env.AS_COMMIT }}"
+                    },
+                    {
+                      title: "author",
+                      value: "${{ process.env.AS_AUTHOR }}"
+                    },
+                    {
+                      title: "took",
+                      value: "${{ process.env.AS_TOOK }}"
+                    }]  
+                  }]
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
