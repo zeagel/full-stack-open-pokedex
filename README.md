@@ -1,15 +1,11 @@
-# Full Stack open CI/CD
+# Full Stack Open 2020, part 11: Continuous Integration 
+**Author:** Mika Honkanen, mika.honkanen@gmail.com
 
-This repository is used for the CI/CD module of the Full stack open course
+## Description
+This project contains all my answers for the exercises related to [Full Stack Open 2020, part 11: Continuous Integration course](https://fullstackopen.com/en/part11).
 
-Fork the repository to complete course exercises
+The answer for the **exercise 11.1** can be found from the file [exercise1.md](https://github.com/zeagel/full-stack-open-pokedex/blob/master/exercise1.md).
 
-## Commands
+The answers for the **exercises 11.2 - 11.20** can be found from the source code of this project, mainly from the [Github Action workflow files](https://github.com/zeagel/full-stack-open-pokedex/tree/master/.github/workflows). 
 
-Start by running `npm install` inside the project folder
-
-`npm start` to run the webpack dev server
-`npm test` to run tests
-`npm run eslint` to run eslint
-`npm run build` to make a production build
-`npm run start-prod` to run your production build
+The answers for the **exercises 11.21 - 11.22** are in the separate Github repository [fuel-tracker-app](https://github.com/zeagel/fuel-tracker-app).
