@@ -2,7 +2,7 @@ name: Periodic healthy check
 
 on:
   schedule:
-    - cron: '0 8 * * *' # every day at 8:00 am
+    - cron: '0 8 * * *' # every day at 8:00 am UTC
 
 jobs:
   healthy_check:
